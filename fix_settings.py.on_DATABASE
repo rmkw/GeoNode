@@ -1,0 +1,47 @@
+cd /opt/geonode/geonode
+nano settings.py
+
+#comentar el DATABASES anterior, despues
+
+#pegar
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'geonode',
+        'USER': 'geonode',
+        'PASSWORD': 'geonode',
+        'HOST': '10.109.1.9',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 0,
+        'CONN_TOUT': 5,
+        'OPTIONS': {
+            'connect_timeout': 5,
+        }
+    },
+    # vector datastore for uploads
+    'datastore': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'ENGINE': '', # Empty ENGINE name disables
+        'NAME': 'geonode_data',
+        'USER': 'geonode',
+        'PASSWORD': 'geonode',
+        'HOST': '10.109.1.9',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 0,
+        'CONN_TOUT': 5,
+        'OPTIONS': {
+            'connect_timeout': 5,
+        }
+    }
+}
+
+touch settings.py
+
+cd /opt/geonode
+
+#encender virtualentorno
+
+workon geonode
+
+DJANGO_SETTINGS_MODULE=geonode.settings python manage.py migrate_baseurl --source-address=http://localhost --target-address=http://10.109.1.79
